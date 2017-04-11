@@ -1,0 +1,58 @@
+<h1>Welcome to the Baby Store</h1>
+<p>Everything you need for your first week at home</p>
+
+<div class="row">
+	<% @products.each do |product| %>
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div style="height: 150px;">
+						<%= image_tag product.image, style: "width: 100px; height: 100px;" %>
+						</div>
+							<p>
+								<a href="#" data-toggle="modal" data-target="#myModal_<%= product.id %>"><span class="glyphicon glyphicon-plus"></span> quick info </a>
+							</p>
+							<p><strong><%= number_to_currency(product.price) %></strong></p>
+							<p><%= product.name %></p>
+							<div style="height: 100px;">
+								<p><%= product.description %></p>
+							</div>
+							<p><strong>Made by: </strong><%= product.brand %></p>
+
+							<p>
+								<%= form_tag('add_to_cart') do %>
+									<div class="hidden">
+										<%= number_field_tag :product_id, product.id %>
+									</div>
+									<p> <%= number_field_tag :quantity, nil, min: 1, placeholder: "How many?" %></p>
+									<p> <%= submit_tag "Add to Cart", class: "btn btn-primary" %> </p>
+								<% end %>
+
+							</p>
+						</div>
+				</div>
+			</div>
+	<!-- Modal -->
+<div class="modal fade" id="myModal_<%= product.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= product.name %></h4>
+      </div>
+      <div class="modal-body">
+        <p> <strong>Price:</strong> <%= number_to_currency(product.price) %> </p>
+        <p> <strong>Description:</strong> <%= product.description %> </p>
+        <p> <strong>Brand:</strong> <%= product.brand %> </p>
+        <p> <strong>Category:</strong> <%= product.category.name %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% end %>
+
+</div>
