@@ -11,7 +11,7 @@ class CartController < ApplicationController
 
   	line_item.save
 
-  	redirect_to root_path
+  	redirect_to view_order_path
   end
 
   def view_order
@@ -25,6 +25,11 @@ class CartController < ApplicationController
     @order.user_id
 
     sum = 0
+
+    if @line_items.empty?
+      redirect_to root_path 
+
+    else 
 
     @line_items.each do |line_item|
       if @order.order_items[line_item.product_id].nil?

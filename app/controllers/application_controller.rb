@@ -1,7 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  before_action :categories, :brands
+  before_action :categories, :brands, :line_items
+
+  def line_items
+    @line_items = LineItem.all
+  end
 
   def categories
   	@categories = Category.all
