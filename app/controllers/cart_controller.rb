@@ -22,7 +22,7 @@ class CartController < ApplicationController
 
     @line_items = LineItem.all
     @order = Order.new
-    @order.user_id
+    @order.user_id = current_user.id
 
     sum = 0
 

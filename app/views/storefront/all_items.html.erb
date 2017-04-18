@@ -1,5 +1,11 @@
-<h1>Welcome to the Baby Store</h1>
+<h1>The Baby Store</h1>
 <p>Everything you need for your first week at home</p>
+
+<% if current_user %>
+	<h5>Welcome back, <%= current_user.name %>!</h5>	
+<% end %>
+
+
 
 <div class="row">
 	<% @products.each do |product| %>
