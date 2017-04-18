@@ -1,12 +1,41 @@
-<h3>Thanks for shopping with us!</h3>
-<p>Let's review your order:</p>
+<h2>Your Order:</h2>
 
-<% @order.order_items.each do |key, value| %>
-	<ul>
-		<li>Product: <%= Product.find(key).name %> - QTY: <%= value %></li>
-	</ul>
-<% end %>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Product</th>
+			<th>Quantity</th>
+			<th>Unit Price</th>
+			<th>Total Price</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @order.order_items.each do |key, value| %>
+			<tr>
+				<td><%= Product.find(key).name %></td>
+				<td><%= value %> x</td>
+				<td><%= number_to_currency Product.find(key).price %></td>
+				<td><%= number_to_currency Product.find(key).price * value %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
 
-<p>
-	<strong>Order Total:</strong> <%= number_to_currency @order.grand_total %>
-</p>
+<h5>Order Subtotal: <%= number_to_currency @order.subtotal %></h5>
+<h5>Order Tax: <%= number_to_currency @order.sales_tax %></h5>
+<h3>Order Grand Total: <%= number_to_currency @order.grand_total %></h3>
+
+<%= button_to "Empty Cart", @order, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-sm", form: {style: 'display:inline-block; '} %>
+
+<div style= 'display:inline-block;'>
+<%= form_tag order_complete_path do %>
+	<div>
+		<%= hidden_field_tag :order_id, @order.id %>
+	</div>
+	<script src="https://checkout.stripe.com/checkout.js" 
+	class="stripe-button"
+	data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+	data-description="Order #<%= @order.id %>"
+	data-amount="<%= (@order.subtotal.to_f.round(2) * 100) %>"></script>
+	<% end %>
+</div>
