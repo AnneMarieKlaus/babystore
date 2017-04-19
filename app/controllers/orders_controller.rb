@@ -10,6 +10,10 @@ class OrdersController < ApplicationController
     @orders = Order.all
   end
 
+  def order_user
+    
+  end
+
   # GET /orders/1
   # GET /orders/1.json
   def show

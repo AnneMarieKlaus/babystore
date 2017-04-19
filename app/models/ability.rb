@@ -15,7 +15,7 @@ class Ability
         can :manage, LineItem
 
     elsif user.guest?
-
+        can :order_user, Order
         can :destroy, LineItem
             
     end

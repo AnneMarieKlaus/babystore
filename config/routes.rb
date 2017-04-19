@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   resources :categories
   resources :products
 
+  get 'orders_users' => 'orders#order_user'
+
   root 'storefront#all_items'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
